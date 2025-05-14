@@ -1,0 +1,15 @@
+#requirements
+numpy
+pandas
+tqdm
+nltk
+spacy
+sentencepiece
+torch
+torchtext
+transformers
+datasets
+accelerate
+scikit-learn
+matplotlib
+wandb
