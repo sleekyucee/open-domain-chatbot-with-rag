@@ -6,13 +6,19 @@ import random
 import numpy as np
 import torch
 import yaml
+import nltk
+from nltk.tokenize import word_tokenize
+
+nltk.download('punkt', quiet=True)
 
 
+#load config
 def load_config(config_path):
     with open(config_path, "r") as f:
         return yaml.safe_load(f)
 
 
+#set seeds for reproducibility
 def set_seed(seed=42):
     random.seed(seed)
     np.random.seed(seed)
@@ -22,15 +28,16 @@ def set_seed(seed=42):
     torch.backends.cudnn.benchmark = False
 
 
-def tokenize(text):
-    import re
-    text = re.sub(r"[^a-zA-Z0-9]+", " ", text.lower()).strip()
-    return text.split()
+#tokenize using NLTK
+def nltk_tokenize(text):
+    return word_tokenize(text.lower())
 
 
+#build vocab
 def build_vocab(data, tokenize_fn, min_freq=2, special_tokens=None):
     special_tokens = special_tokens or ["<pad>", "<sos>", "<eos>", "<unk>"]
     freq = {}
+
     for ex in data:
         for token in tokenize_fn(ex["input"] + " " + ex["response"]):
             freq[token] = freq.get(token, 0) + 1
@@ -55,6 +62,7 @@ def load_vocab(path):
         return pickle.load(f)
 
 
+#load GloVe embeddings 
 def load_glove(glove_path, word2idx, embedding_dim=100):
     embeddings_index = {}
     with open(glove_path, "r", encoding="utf-8") as f:
