@@ -7,10 +7,13 @@ import numpy as np
 import torch
 import yaml
 import nltk
-from nltk.tokenize import word_tokenize
+from nltk.tokenize import TreebankWordTokenizer
 
-nltk.download('punkt', quiet=True)
+nltk.download('punkt')
 
+#special tokens and indices
+SPECIAL_TOKENS = ["<pad>", "<sos>", "<eos>", "<unk>"]
+PAD_IDX, SOS_IDX, EOS_IDX, UNK_IDX = 0, 1, 2, 3
 
 #load config
 def load_config(config_path):
@@ -29,8 +32,10 @@ def set_seed(seed=42):
 
 
 #tokenize using NLTK
+tokenizer = TreebankWordTokenizer()
+
 def nltk_tokenize(text):
-    return word_tokenize(text.lower())
+    return tokenizer.tokenize(text.lower())
 
 
 #build vocab
