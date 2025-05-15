@@ -1,0 +1,31 @@
+#lstm2
+data_settings:
+  dataset_path: "/content/drive/MyDrive/open-domain-chatbot-with-rag/dataset/merged_pairs.json"
+  glove_path: "/content/drive/MyDrive/open-domain-chatbot-with-rag/glove/glove.6B.300d.txt"
+  vocab_path: "/content/drive/MyDrive/open-domain-chatbot-with-rag/dataset/vocab.pkl"
+  min_freq: 2
+  max_len: 50
+
+model_settings:
+  rnn_type: "lstm"
+  emb_dim: 300
+  hidden_dim: 128
+  n_layers: 1
+  dropout: 0.5
+  pad_idx: 0
+  sos_idx: 1
+  eos_idx: 2
+
+train_settings:
+  batch_size: 64
+  num_epochs: 5
+  learning_rate: 0.001
+  teacher_forcing_ratio: 0.5
+  clip_grad: 1.0
+  early_stopping_patience: 2
+
+experiment_settings:
+  experiment_name: "lstm2"
+  project: "open_domain_chatbot"
+  use_wandb: true
+
