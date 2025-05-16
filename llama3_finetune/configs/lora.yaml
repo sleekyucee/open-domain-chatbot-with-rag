@@ -1,0 +1,29 @@
+#lora
+data_settings:
+  tokenized_data_path: dataset/tokenized_llama3_train.pt
+  max_length: 512
+
+model_settings:
+  model_name: meta-llama/Meta-Llama-3-8B-Instruct
+  r: 8
+  alpha: 16
+  dropout: 0.05
+  bias: "none"
+  target_modules: ["q_proj", "v_proj"]
+
+train_settings:
+  output_dir: models/llama3_lora
+  batch_size: 2
+  gradient_accumulation_steps: 4
+  learning_rate: 2e-4
+  warmup_steps: 50
+  max_steps: 500
+  save_every: 100
+  fp16: true
+  bf16: true
+
+experiment_settings:
+  experiment_name: llama3_lora
+  project: open_domain_chatbot
+  use_wandb: false
+
